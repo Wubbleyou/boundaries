@@ -1,0 +1,25 @@
+{
+    "name": "wubbleyou/boundaries",
+    "description": "Automatic test generation for validating route middleware and policy boundaries",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Wubbleyou\\Boundaries\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Wubbleyou",
+            "email": "hello@wubbleyou.co.uk",
+            "homepage": "https://wubbleyou.co.uk"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Wubbleyou\\Boundaries\\Providers\\BoundariesServiceProvider"
+            ]
+        }
+    }
+}

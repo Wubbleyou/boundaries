@@ -1,0 +1,13 @@
+<?php
+
+namespace App\BoundaryRules;
+
+use Wubbleyou\Boundaries\BoundaryRules\BoundaryRule;
+
+class $CLASS_NAME$ extends BoundaryRule {
+    public function handle(): bool
+    {
+        // $this->route contains the current route we're testing against
+        return false;
+    }
+}

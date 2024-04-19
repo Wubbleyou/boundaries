@@ -1,0 +1,10 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use Wubbleyou\Boundaries\Tests\$EXTENDS_NAME$;
+use App\Traits\BoundaryRouteTrait;
+
+class $CLASS_NAME$ extends $EXTENDS_NAME$ {
+    use BoundaryRouteTrait;
+}
