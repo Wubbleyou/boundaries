@@ -3,11 +3,12 @@
 namespace App\BoundaryRules;
 
 use Wubbleyou\Boundaries\BoundaryRules\BoundaryRule;
+use Illuminate\Routing\Route;
+use Tests\TestCase;
 
 class $CLASS_NAME$ extends BoundaryRule {
-    public function handle(): bool
+    public function handle(Route $route, TestCase $test, string $routeName): array
     {
-        // $this->route contains the current route we're testing against
-        return false;
+        return [];
     }
 }

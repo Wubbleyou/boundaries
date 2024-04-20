@@ -3,11 +3,11 @@
 namespace Wubbleyou\Boundaries\BoundaryRules;
 
 use Illuminate\Routing\Route;
+use Tests\TestCase;
 
 class BoundaryRule implements IBoundaryRule {
-    public function __construct(public Route $route) {}
-
-    public function handle(): bool {
-        return false;
+    public function handle(Route $route, TestCase $test, string $routeName): array
+    {
+        return [];
     }
 }

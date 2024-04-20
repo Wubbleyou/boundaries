@@ -2,20 +2,20 @@
 
 namespace Wubbleyou\Boundaries\Console\Commands;
 
-class GenerateMiddlewareTest extends StubCommand {
+class GenerateTest extends StubCommand {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'wubbleyou:generate-middleware-test';
+    protected $signature = 'wubbleyou:generate-test';
  
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Generates Wubbleyou\Boundaries middleware test';
+    protected $description = 'Generates Wubbleyou\Boundaries test';
 
     /**
      * Where the generated file is saved.
@@ -29,7 +29,7 @@ class GenerateMiddlewareTest extends StubCommand {
      *
      * @var string
      */
-    protected $fileName = 'BoundaryMiddlewareTest';
+    protected $fileName = 'BoundaryTest';
 
     /**
      * The stub filename to base the generated file from.
@@ -45,16 +45,16 @@ class GenerateMiddlewareTest extends StubCommand {
      */
     protected $stubVariables = [
         'NAMESPACE' => 'App\\Tests\\Feature\\Boundaries',
-        'CLASS_NAME' => 'BoundaryMiddlewareTest',
-        'EXTENDS_NAME' => 'BaseBoundaryMiddlewareTest',
+        'CLASS_NAME' => 'BoundaryTest',
+        'EXTENDS_NAME' => 'BaseBoundaryTest',
     ];
 
     public function handle() {
         $this->call('wubbleyou:generate-route-trait');
         
         if($this->generateStub())
-            return $this->info("Generated middleware test: " . $this->path . '/' . $this->fileName . '.php');
+            return $this->info("Generated test: " . $this->path . '/' . $this->fileName . '.php');
         
-        $this->error("You have already generated the middleware test: " . $this->path . '/' . $this->fileName . '.php');
+        $this->error("You have already generated the test: " . $this->path . '/' . $this->fileName . '.php');
     }
 }
