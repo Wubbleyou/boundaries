@@ -61,6 +61,12 @@ return [
 #### MiddlewareRule
 The middleware rule tests your route against a certain set of middleware, if it doesn't match all of these middleware the test will fail.
 
+MiddlewarRule also has an optional second parameter for $strict (default: false). If strict is enabled the supplied array of expected middleware must match exactly to the middleware present on the route. If strict is not enabled the middleware present on the route must contain all the expected middleware but can also contain other middleware we're not testing for.
+
+```
+new MiddlewareRule(['web', 'auth'], true),
+```
+
 #### PolicyRule
 The policy rule performs a test against a specific route to test the HTTP status code. You supply it with:
 
