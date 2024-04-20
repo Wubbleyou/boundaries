@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class PolicyRule extends BoundaryRule {
+    public string $name = 'MiddlewareRule';
+
     public function __construct(public string $reqType, public int $expectedStatus, public $user = null, public array $params = []) {}
 
     public function handle(Route $route, TestCase $test, string $routeName): array
@@ -26,7 +28,7 @@ class PolicyRule extends BoundaryRule {
 
         if ($this->expectedStatus !== $testCase->getStatusCode()) {
             $userName = ($this->user) ? $this->user->email : 'Guest user';
-            $errors[] = "{$reqType}:{$routeName} does not match for {$userName} - Expected {$this->expectedStatus}, got {$testCase->getStatusCode()}\n";
+            $errors[] = $this->getName() . " - {$reqType}:{$routeName} does not match for {$userName} - Expected {$this->expectedStatus}, got {$testCase->getStatusCode()}\n";
         }
 
         return $errors;

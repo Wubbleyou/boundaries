@@ -7,4 +7,6 @@ use Tests\TestCase;
 
 interface IBoundaryRule {
     public function handle(Route $route, TestCase $test, string $routeName): array;
+    public function setName(string $name);
+    public function getName();
 }
