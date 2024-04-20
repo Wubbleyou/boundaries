@@ -47,6 +47,6 @@ class BaseBoundaryTest extends TestCase
         }
 
         $errorCount = count($errors);
-        $this->assertEmpty($errors, "The following routes ({$errorCount}) failed boundary rules:\n\n" . implode("\n", $errors));
+        $this->assertEmpty($errors, "The following routes ({$errorCount}) failed boundary rules:\n\n" . implode("\n", $errors) . "\n");
     }
 }

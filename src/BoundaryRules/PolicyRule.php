@@ -28,7 +28,7 @@ class PolicyRule extends BoundaryRule {
 
         if ($this->expectedStatus !== $testCase->getStatusCode()) {
             $userName = ($this->user) ? $this->user->email : 'Guest user';
-            $errors[] = $this->getName() . " - {$reqType}:{$routeName} does not match for {$userName} - Expected {$this->expectedStatus}, got {$testCase->getStatusCode()}\n";
+            $errors[] = $this->getName() . " - {$reqType}:{$routeName} does not match for {$userName} - Expected {$this->expectedStatus}, got {$testCase->getStatusCode()}";
         }
 
         return $errors;
