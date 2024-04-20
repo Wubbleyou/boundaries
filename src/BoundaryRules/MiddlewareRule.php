@@ -8,7 +8,7 @@ use Tests\TestCase;
 class MiddlewareRule extends BoundaryRule {
     public string $name = 'MiddlewareRule';
 
-    public function __construct(public array $middleware) {}
+    public function __construct(public array $middleware, public bool $strict = false) {}
 
     public function handle(Route $route, TestCase $test, string $routeName): array
     {
@@ -16,10 +16,14 @@ class MiddlewareRule extends BoundaryRule {
         $currentMiddleware = $route->gatherMiddleware();
         $routeName = $route->getName() ?? $route->getActionName();
 
-        foreach ($this->middleware as $expectedMiddleware) {
-            if (!in_array($expectedMiddleware, $currentMiddleware, true)) {
-                $errors[] = $this->getName() . " - {$routeName} should have middleware [{$expectedMiddleware}] but does not [" . implode(',', $currentMiddleware) . ']';
-            }
+        $matches = array_intersect($this->middleware, $currentMiddleware);
+
+        if(count($matches) < count($this->middleware)) {
+            $errors[] = $this->getName() . " - {$routeName} should have middleware [" . implode(',', $this->middleware) . "] but does not [" . implode(',', $currentMiddleware) . ']';
+        }
+
+        if($this->strict && count($matches) !== count($currentMiddleware)) {
+            $errors[] = $this->getName() . " - {$routeName} should have only this middleware present [" . implode(',', $this->middleware) . "] but has [" . implode(',', $currentMiddleware) . ']';
         }
 
         return $errors;
