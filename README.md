@@ -1,5 +1,7 @@
 # Wubbleyou Boundaries
-Boundaries is a DX tool used to generate tests to automatically scan your routes for misconfigured Middleware and Policies.
+Boundaries is a DX tool used to generate unit tests to automatically test your routes against developer-determined rules.
+
+Two rules are provided with out of the box with Boundaries, a `MiddlewareRule` and a `PolicyRule`
 
 ## Installation
 Add the repo to your `composer.json`
@@ -20,17 +22,9 @@ composer require wubbleyou/boundaries
 ```
 
 ## Usage
-To get started you'll need to run the following commands to generate the base test files:
+To get started you'll need to run the following command to generate the base test file:
 ```
-php/sail artisan wubbleyou:generate-middleware-test
-```
-```
-php/sail artisan wubbleyou:generate-policy-test
-```
-
-You can also generate both tests with this command:
-```
-php/sail artisan wubbleyou:generate-tests
+php/sail artisan wubbleyou:generate-test
 ```
 
 ## Configuration
@@ -58,50 +52,27 @@ $userTwo = User::factory()->make();
 
 return [
     'users.change-password' => [
-        'middleware' => ['web', 'auth'],
-        'rules' => [
-            'ruleOne' => function() {return true;},
-            'ruleTwo' => function() {return false;},
-            'ruleThree' => TestRule::class,
-        ],
-        'tests' => [
-            'get' => [
-                [
-                    'expected' => 200, // Expected HTTP response code
-                    'user' => $admin, // The user we're testing as
-                    'params' => ['user' => $userOne], // Any parameters the route requires
-                ],
-                [
-                    'expected' => 200, // Expected HTTP response code
-                    'user' => $userOne, // The user we're testing as
-                    'params' => ['user' => $userOne], // Any parameters the route requires
-                ],
-                [
-                    'expected' => 403, // Expected HTTP response code
-                    'user' => $userOne, // The user we're testing as
-                    'params' => ['user' => $userTwo], // Any parameters the route requires
-                ],
-                [
-                    'expected' => 302, // Expected HTTP response code
-                    'params' => ['user' => $userOne], // Any parameters the route requires
-                ],
-            ]
-        ]
+        new MiddlewareRule(['web', 'auth', 'incorrect']),
+        new PolicyRule('get', 403, $userOne, ['user' => $userTwo]),
     ]
 ];
 ```
 
-**You can supplying the following options:**
+#### MiddlewareRule
+The middleware rule tests your route against a certain set of middleware, if it doesn't match all of these middleware the test will fail.
 
-- Middleware
-- Rules
-- Tests
+#### PolicyRule
+The policy rule performs a test against a specific route to test the HTTP status code. You supply it with:
 
-#### Middleware
-Middleware is an array of all the middleware you want to check this route has, if the specific route doesn't match all of these middleware the test will fail.
+- The request type (get/post/etc)
+- The expected HTTP status code response (200, 404, 403, etc)
+- A user to test the route as (this can be set to NULL to test authenticated) (default: null)
+- Parameters the route expects (optional) (default: [])
 
-#### Rules
-Rules are Closures or BoundaryRule classes you can supply that return a boolean, `false` will cause the test to fail. You can generate a new BoundaryRule class using the following command:
+And it will test that route and return an error if the response code doesn't match the one you've supplied.
+
+#### Custom BoundaryRules
+You can also generate custom BoundaryRules using the following command:
 
 ```
 php/sail artisan wubbleyou:generate-rule RuleName
@@ -115,44 +86,29 @@ An example BoundaryRule would look like:
 namespace App\BoundaryRules;
 
 use Wubbleyou\Boundaries\BoundaryRules\BoundaryRule;
+use Illuminate\Routing\Route;
+use Tests\TestCase;
 
-class BasicTestRule extends BoundaryRule {
-    public function handle(): bool
+class TestingRule extends BoundaryRule {
+    public function handle(Route $route, TestCase $test, string $routeName): array
     {
-        // $this->route contains the current route we're testing against
-        return false;
+        return ['This test failed because this array is not empty'];
     }
 }
 ```
 
-#### Tests
-Supplying tests will run policy assertions based on the information you pass through, an example test could be like follows:
+#### Closures
+You can also supply a Closure as a BoundaryRule instead:
 
 ```
-'get' => [
-    [
-        'expected' => 200, // Expected HTTP response code
-        'user' => $admin, // The user we're testing as
-        'params' => ['user' => $userOne], // Any parameters the route requires
-    ],
-    [
-        'expected' => 200, // Expected HTTP response code
-        'user' => $userOne, // The user we're testing as
-        'params' => ['user' => $userOne], // Any parameters the route requires
-    ],
-    [
-        'expected' => 403, // Expected HTTP response code
-        'user' => $userOne, // The user we're testing as
-        'params' => ['user' => $userTwo], // Any parameters the route requires
-    ],
-    [
-        'expected' => 302, // Expected HTTP response code
-        'params' => ['user' => $userOne], // Any parameters the route requires
-    ],
-]
-```
+function(Route $route) {
+    if($route->getName() !== 'hello') {
+        return ['Route name is not hello'];
+    }
 
-You supply the request type (GET/POST/PUT/DELETE) and then a multidimensional array to specify the expected HTTP response code, optionally attach a user (to run the test as `actingAs`) and optionally any parameters the route relies on.
+    return [];
+},
+```
 
 #### Additional Information
 Boundaries testing will fail if every route is not accounted for in either `getWhitelist()` or `getRoutes()`, if you want to generate a list of routes you that aren't in either of those run the following command:
