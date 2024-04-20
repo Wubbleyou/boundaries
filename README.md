@@ -28,7 +28,7 @@ php/sail artisan wubbleyou:generate-test
 ```
 
 ## Configuration
-Now you've got your tests generated and saved in `tests\Feature\Boundaries` you might notice a trait has been placed in `app\Traits\BoundaryRouteTrait.php` which contains 2 methods, please read the additional information at the bottom to understand why you need to supply these.
+Now you've got your test generated and saved in `tests\Feature\Boundaries\BoundaryTest.php` you might notice a trait has been placed in `app\Traits\BoundaryRouteTrait.php` which contains 2 methods, please read the additional information at the bottom to understand why you need to supply these.
 
 ### getWhitelist()
 The `getWhitelist()` method allows you to return an array of all the routes you want to be ignored by Wubbleyou\Boundaries.
