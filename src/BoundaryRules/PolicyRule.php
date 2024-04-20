@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
 
 class PolicyRule extends BoundaryRule {
-    public string $name = 'MiddlewareRule';
+    public string $name = 'PolicyRule';
 
     public function __construct(public string $reqType, public int $expectedStatus, public $user = null, public array $params = []) {}
 
