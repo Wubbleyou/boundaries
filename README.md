@@ -66,7 +66,7 @@ The policy rule performs a test against a specific route to test the HTTP status
 
 - The request type (get/post/etc)
 - The expected HTTP status code response (200, 404, 403, etc)
-- A user to test the route as (this can be set to NULL to test authenticated) (default: null)
+- A user to test the route as (this can be set to NULL to test unauthenticated) (default: null)
 - Parameters the route expects (optional) (default: [])
 
 And it will test that route and return an error if the response code doesn't match the one you've supplied.
