@@ -46,9 +46,9 @@ return [
 The `getRoutes()` method allows you to return an array to specify the exact assertions that should be ran on each route, here's an example:
 
 ```
-$admin = User::factory()->make(['is_admin', true]);
-$userOne = User::factory()->make();
-$userTwo = User::factory()->make();
+$admin = User::factory()->create(['is_admin', true]);
+$userOne = User::factory()->create();
+$userTwo = User::factory()->create();
 
 return [
     'users.change-password' => [
