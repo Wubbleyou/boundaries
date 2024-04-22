@@ -4,18 +4,7 @@ Boundaries is a DX tool used to generate unit tests to automatically test your r
 Two rules are provided with out of the box with Boundaries, a `MiddlewareRule` and a `PolicyRule`
 
 ## Installation
-Add the repo to your `composer.json`
-
-```
-"repositories":[
-    {
-        "type": "vcs",
-        "url": "git@github.com:Wubbleyou/boundaries.git"
-    }
-],
-```
-
-Install the composer package normally
+Install the package normally via Composer
 
 ```
 composer require wubbleyou/boundaries
