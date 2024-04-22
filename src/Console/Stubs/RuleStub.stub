@@ -7,7 +7,7 @@ use Illuminate\Routing\Route;
 use Tests\TestCase;
 
 class $CLASS_NAME$ extends BoundaryRule {
-    public string $name = $CLASS_NAME$;
+    public string $name = "$CLASS_NAME$";
 
     public function handle(Route $route, TestCase $test, string $routeName): array
     {
