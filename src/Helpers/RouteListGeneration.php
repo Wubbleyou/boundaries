@@ -27,7 +27,7 @@ class RouteListGeneration
         $nameCol = array_column($routesToCheck, 'name');
         $actionCol = array_column($routesToCheck, 'action');
 
-        foreach ($existingBoundaries as $boundary) {
+        foreach ($existingBoundaries as $boundary => $rules) {
             $key = array_search($boundary, $nameCol, true);
             if ($key !== false) {
                 unset($routesToCheck[$key]);
